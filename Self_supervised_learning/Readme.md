@@ -34,7 +34,7 @@ $$\ell_{i,j} = -\log \frac{\exp(\text{sim}(z_i, z_j)/\tau)}{\sum_{k=1}^{2N} \mat
 [cite_start]As the labeled sample sizes scale down (e.g., down to 100 sample points), the **contrastive pre-trained model holds strong with massive accuracy gains**, whereas models trained from scratch plummet[cite: 36, 39].
 
 #### UCI-HAR Performance Curve
-![UCI-HAR Pretrained vs Supervised](..images/uci_har_pretrain_vs_supervised.png)
+![UCI-HAR Pretrained vs Supervised](../images/uci_har_pretrain_vs_supervised.png)
 
 ### 2. Final Task Accuracy Summary
 [cite_start]Once fully fine-tuned, the self-supervised representations achieved highly competitive results across all three benchmarks[cite: 40]:
@@ -54,7 +54,7 @@ $$\ell_{i,j} = -\log \frac{\exp(\text{sim}(z_i, z_j)/\tau)}{\sum_{k=1}^{2N} \mat
 [cite_start]Even though collapsing complex embeddings into 2 dimensions creates natural overlapping areas, clear structural class separation and regional boundaries are easily visible[cite: 37, 38, 49].
 
 #### CIFAR-10 Latent Space Cluster
-![CIFAR Scatter Plot](..images/cifar_scatter_plot.png)
+![CIFAR Scatter Plot](../images/cifar_scatter_plot.png)
 
 ---
 
