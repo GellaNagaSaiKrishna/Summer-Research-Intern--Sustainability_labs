@@ -26,6 +26,6 @@ We evaluated the performance of our contrastive learning model against both a fu
 
 To visually verify the contrastive learning effect, we extracted the latent space embeddings of the test set and plotted them using Principal Component Analysis (PCA). 
 
-![PCA of Sleep Stage Embeddings](images/sleep_edf_scatter_plot.png)
+![PCA of Sleep Stage Embeddings](../images/sleep_edf_scatter_plot.png)
 
 The scatter plot highlights how our 3-channel representation framework successfully organizes the feature space across different physiological stages (Wake, N1, N2, N3, REM), showing clear structural clustering even with limited downstream supervision.
