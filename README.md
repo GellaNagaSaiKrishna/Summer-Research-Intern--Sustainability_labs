@@ -1,124 +1,77 @@
-# Designing a Multimodal Foundation Model for Sleep Apnea Detection and Sleep Stage Classification
+# Multimodal Foundation Model for Sleep Stage Classification and Sleep Apnea Detection
 
 ## Overview
 
-This repository contains the research work carried out under Prof. Nipun Batra as part of the Summer Research Internship at Sustainability Labs, IIT Gandhinagar.
+This repository contains research conducted under Prof. Nipun Batra at Sustainability Labs, IIT Gandhinagar. The project explores self-supervised contrastive learning for learning robust representations from physiological signals and developing foundation models for sleep stage classification and sleep apnea detection.
 
-The project aims to build a self-supervised multimodal foundation model capable of:
-
-- Sleep Stage Classification
-- Sleep Apnea Detection
-- Hypopnea Detection
-
-using physiological signals obtained from overnight polysomnography (PSG) recordings.
+The primary objective is to reduce dependence on costly expert annotations by leveraging large amounts of unlabeled polysomnography (PSG) data and fine-tuning on limited labeled samples.
 
 ---
 
 ## Motivation
 
-Manual sleep scoring is a challenging and time-consuming task requiring experts to annotate approximately 1000 sleep epochs per patient.
+Sleep stage scoring and apnea detection require experts to manually annotate hundreds to thousands of 30-second epochs per patient. This process is expensive, time-consuming, and prone to inter-rater variability.
 
-Large amounts of unlabeled physiological data are available, while labeled data is expensive and difficult to obtain.
-
-This project investigates whether self-supervised contrastive learning can learn useful representations from unlabeled data and significantly reduce labeling requirements.
+Self-supervised learning provides a scalable alternative by learning meaningful representations from unlabeled physiological signals before adapting them to downstream clinical tasks.
 
 ---
 
 ## Contrastive Learning Framework
 
-For each sample:
+The core idea of this project is to learn meaningful representations from large amounts of unlabeled data using self-supervised contrastive learning.
 
-1. Generate two augmented views.
-2. Pass both views through a shared encoder.
-3. Learn embeddings using InfoNCE / NT-Xent loss.
-4. Fine-tune using a small amount of labeled data.
-5. Perform downstream classification.
+For each input sample, two augmented views are generated and passed through a shared encoder network. The encoder learns to bring representations of positive pairs closer in the embedding space while pushing representations of different samples apart using the InfoNCE (NT-Xent) loss. After pretraining, the encoder is fine-tuned using labeled data for downstream classification tasks.
 
 <p align="center">
   <img src="Architecture.png" alt="Contrastive Learning Architecture" width="800">
 </p>
 
+This framework enables efficient utilization of unlabeled data and significantly reduces dependence on expensive expert annotations.
+
 ---
 
 ## Datasets
 
-### MNIST
+| Dataset   | Modality          | Task                       |
+| --------- | ----------------- | -------------------------- |
+| MNIST     | Grayscale Images  | Digit Classification       |
+| CIFAR-10  | RGB Images        | Object Classification      |
+| UCI-HAR   | Time-Series Data  | Activity Recognition       |
+| Sleep-EDF | EEG & EMG Signals | Sleep Stage Classification |
 
-- Grayscale handwritten digits
-- Single-channel images
-- 2D CNN encoder
-
-### CIFAR-10
-
-- RGB natural images
-- ResNet encoder
-- SimCLR-based contrastive learning
-
-### UCI-HAR
-
-- Human Activity Recognition
-- Multivariate time-series data
-- 1D CNN + ResNet encoder
-
-### Sleep-EDF
-
-Polysomnography recordings containing:
-
-- EEG Fpz-Cz
-- EEG Pz-Oz
-- EOG
-- EMG
-- Respiratory signals
-- Event markers
-
-Current experiments use:
-
-- EEG Fpz-Cz
-- EEG Pz-Oz
-- EMG Submental
-
----
-
-## Sleep-EDF Signals
+### Sleep-EDF Signals
 
 <p align="center">
   <img src="images/sleed_edf_signals.png" alt="Sleep EDF Signals" width="900">
 </p>
 
 <p align="center">
-  <em>Sample PSG signals from the Sleep-EDF dataset.</em>
+  <em>Example physiological signals from the Sleep-EDF dataset.</em>
 </p>
 
 ---
 
 ## Results
 
-### Contrastive Learning Performance
+| Dataset                               | Accuracy |
+| ------------------------------------- | -------- |
+| MNIST                                 | 97%      |
+| CIFAR-10                              | 80–85%   |
+| UCI-HAR                               | 95–97%   |
+| Sleep-EDF (100% Supervised)           | 91%      |
+| Sleep-EDF (Contrastive + Fine-Tuning) | 88%      |
+| Sleep-EDF (10% Supervised)            | 86%      |
 
-| Dataset | Accuracy |
-|----------|----------|
-| MNIST | 97% |
-| CIFAR-10 | 80–85% |
-| UCI-HAR | 95–97% |
-
-### Sleep-EDF
-
-| Method | Accuracy |
-|----------|----------|
-| Supervised (100% labels) | 91% |
-| Contrastive Learning + Fine-tuning | 88% |
-| Supervised (10% labels) | 86% |
-
-These results demonstrate that self-supervised pretraining achieves performance close to fully supervised models while using significantly fewer labeled samples.
+These results demonstrate that contrastive pretraining achieves performance close to fully supervised learning while requiring substantially fewer labeled samples.
 
 ---
 
 ## Key Findings
 
-- Contrastive learning generalizes across images and time-series modalities.
-- Pretrained encoders substantially improve performance when labeled data is scarce.
-- Learned embeddings exhibit meaningful clustering in PCA visualizations.
-- Self-supervised learning is highly promising for medical signal analysis.
+* Contrastive learning generalizes effectively across image and time-series modalities.
+* Pretrained encoders significantly improve performance when labeled data is limited.
+* Learned embeddings exhibit meaningful clustering and improved separability.
+* Self-supervised learning is a promising direction for large-scale medical signal analysis.
 
 ---
 
@@ -128,6 +81,7 @@ These results demonstrate that self-supervised pretraining achieves performance 
 .
 ├── MNIST.ipynb
 ├── CIFAR.ipynb
+├── Contrastive.ipynb
 ├── uci_har.ipynb
 ├── sleep_edf.ipynb
 ├── edf_contrastive.ipynb
@@ -136,62 +90,19 @@ These results demonstrate that self-supervised pretraining achieves performance 
 ├── Architecture.png
 ├── images/
 │   └── sleed_edf_signals.png
+├── vic.py
 └── README.md
 ```
 
 ---
 
-## Research Progress
-
-### Week 1
-
-- Studied SleepFM and Stanford Sleep Bench papers.
-- Learned:
-  - RNNs
-  - LSTMs
-  - Encoder-Decoder Architectures
-  - Attention Mechanisms
-  - Transformers
-
-### Week 2
-
-- Learned contrastive learning techniques.
-- Implemented SimCLR-style pipelines on:
-  - MNIST
-  - CIFAR-10
-  - UCI-HAR
-
-### Week 3
-
-- Applied contrastive learning to Sleep-EDF.
-- Trained models on remote compute servers.
-
----
-
 ## Future Work
 
-- Multimodal representation learning using EEG, EOG, EMG and respiratory channels.
-- Large-scale sleep foundation model pretraining.
-- Fine-tuning on clinical sleep datasets from AIIMS Delhi.
-- Automated sleep stage scoring.
-- Obstructive sleep apnea and hypopnea detection.
-
----
-
-## Author
-
-**Gella Naga Sai Krishna**  
-B.Tech, Computer Science and Engineering  
-Indian Institute of Technology Gandhinagar
-
-### Research Interests
-
-- Self-Supervised Learning
-- Contrastive Learning
-- Representation Learning
-- Healthcare AI
-- Foundation Models
-- Sleep Analysis
+* Integrate additional PSG modalities including EOG and respiratory signals.
+* Scale the encoder into a multimodal sleep foundation model.
+* Pretrain on larger and more diverse sleep datasets.
+* Fine-tune on clinical sleep data from AIIMS Delhi.
+* Develop automated systems for sleep stage classification and obstructive sleep apnea detection.
 
 ---
 
