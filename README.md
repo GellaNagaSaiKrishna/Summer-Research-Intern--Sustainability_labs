@@ -62,6 +62,25 @@ For each sample:
 4. Fine-tune using labeled data with cross-entropy loss.
 
 ```
+
+## Contrastive Learning Pipeline
+
+The model first learns representations from unlabeled data using contrastive learning and is later fine-tuned on labeled data for downstream classification tasks.
+
+<p align="center">
+  <img src="assets/model_architecture.png" alt="Contrastive Learning Architecture" width="700"/>
+</p>
+
+### Workflow
+
+1. Generate two augmented views of the same sample.
+2. Pass both views through a shared encoder.
+3. Learn embeddings using InfoNCE / NT-Xent loss.
+4. Fine-tune the pretrained encoder using labeled data.
+5. Perform downstream classification.
+
+```
+
 Input Sample
      │
  ┌───┴───┐
@@ -264,32 +283,6 @@ python train_sleep_edf.py
 
 ---
 
-## Research Progress
-
-### Week 1
-
-- Studied recent sleep foundation model literature.
-- Learned:
-  - RNNs
-  - LSTMs
-  - Encoder-Decoder Architectures
-  - Attention Mechanisms
-  - Transformers
-
-### Week 2
-
-- Learned contrastive learning techniques.
-- Implemented SSL pipelines on:
-  - MNIST
-  - CIFAR-10
-  - UCI-HAR
-
-### Week 3
-
-- Applied contrastive learning to Sleep-EDF.
-- Learned large-scale model training workflows.
-
----
 
 ## Future Work
 
