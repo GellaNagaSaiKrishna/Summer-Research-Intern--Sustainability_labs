@@ -22,10 +22,6 @@ The core idea of this project is to learn meaningful representations from large 
 
 For each input sample, two augmented views are generated and passed through a shared encoder network. The encoder learns to bring representations of positive pairs closer in the embedding space while pushing representations of different samples apart using the InfoNCE (NT-Xent) loss. After pretraining, the encoder is fine-tuned using labeled data for downstream classification tasks.
 
-<p align="center">
-  <img src="Architecture.png" alt="Contrastive Learning Architecture" width="800">
-</p>
-
 This framework enables efficient utilization of unlabeled data and significantly reduces dependence on expensive expert annotations.
 
 ---
@@ -79,19 +75,34 @@ These results demonstrate that contrastive pretraining achieves performance clos
 
 ```text
 .
-├── MNIST.ipynb
-├── CIFAR.ipynb
-├── Contrastive.ipynb
-├── uci_har.ipynb
-├── sleep_edf.ipynb
-├── edf_contrastive.ipynb
-├── edf_supervised.ipynb
-├── edf_supervised_10.ipynb
-├── Architecture.png
+## Repository Structure
+
+```text
+.
+├── Research Papers/
+│   ├── SleepFM.pdf
+│   ├── Stanford Sleep Bench.pdf
+│   └── ...
+│
+├── Self_supervised_learning/
+│   ├── MNIST.ipynb
+│   ├── CIFAR.ipynb
+│   ├── Contrastive.ipynb
+│   └── uci_har.ipynb
+│
+├── Sleep_edf/
+│   ├── sleep_edf.ipynb
+│   ├── edf_contrastive.ipynb
+│   ├── edf_supervised.ipynb
+│   └── edf_supervised_10.ipynb
+│
 ├── images/
+│   ├── Architecture.png
 │   └── sleed_edf_signals.png
-├── vic.py
+│
 └── README.md
+```
+
 ```
 
 ---
